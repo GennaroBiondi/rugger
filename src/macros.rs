@@ -1,29 +1,31 @@
 #[macro_export]
-/// Macro to quickly log.
-///
-/// The macro uses format!(...) under the hood, so formatting is available.
+/// Core macro that handles formatting and builds a LogMessage
+macro_rules! log {
+    ($level:expr, $msg:expr) => {
+        $crate::LogMessage::new($msg, $level).log();
+    };
+    ($level:expr, $fmt:expr, $($arg:tt)*) => {
+        $crate::LogMessage::new(format!($fmt, $($arg)*), $level)
+    };
+}
+
+#[macro_export]
 macro_rules! log_info {
-    ($msg:expr) => {
-        println!("{}: {}", $crate::StandardLogLevel::Info, $msg);
+    ($($arg:tt)*) => {
+        $crate::log!($crate::StandardLogLevel::Info, $($arg)*);
     };
 }
 
 #[macro_export]
-/// Macro to quickly log a warning.
-///
-/// The macro uses format!(...) under the hood, so formatting is available.
 macro_rules! log_warning {
-    ($msg:expr) => {
-        println!("{}: {}", $crate::StandardLogLevel::Warning, $msg);
+    ($($arg:tt)*) => {
+        $crate::log!($crate::StandardLogLevel::Warning, $($arg)*);
     };
 }
 
 #[macro_export]
-/// Macro to quickly log an error.
-///
-/// The macro uses format!(...) under the hood, so formatting is available.
 macro_rules! log_error {
-    ($msg:expr) => {
-        println!("{}: {}", $crate::StandardLogLevel::Error, $msg);
+    ($($arg:tt)*) => {
+        $crate::log!($crate::StandardLogLevel::Error, $($arg)*);
     };
 }
