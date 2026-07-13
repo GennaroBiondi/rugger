@@ -65,10 +65,7 @@ impl<T: LogLevel> LogMessage<T> {
     pub fn tee(&self, path: impl AsRef<Path>) -> Result<(), std::io::Error> {
         use std::io::Write;
 
-        let mut file = OpenOptions::new()
-            .create(true)
-            .append(true)
-            .open(path)?;
+        let mut file = OpenOptions::new().create(true).append(true).open(path)?;
         writeln!(file, "{}", self)?;
 
         self.log();
