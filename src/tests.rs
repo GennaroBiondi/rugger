@@ -1,6 +1,9 @@
 use std::fmt::Display;
 
-use crate::{LogLevel, LogMessage, StandardLogLevel, log_error, log_info, log_warning, tee_error, tee_info, tee_warning};
+use crate::{
+    LogLevel, LogMessage, StandardLogLevel, log_error, log_info, log_warning, tee_error, tee_info,
+    tee_warning,
+};
 
 #[test]
 fn test_logging() {
