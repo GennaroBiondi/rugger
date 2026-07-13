@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::{LogLevel, LogMessage, StandardLogLevel, log_error, log_info, log_warning};
+use crate::{LogLevel, LogMessage, StandardLogLevel, log_error, log_info, log_warning, tee_error, tee_info, tee_warning};
 
 #[test]
 fn test_logging() {
@@ -71,4 +71,8 @@ fn test_macros() {
     log_info!("This is an incredibly convenient and fast log info message!");
     log_warning!("This is an incredibly convenient and fast log warning message!");
     log_error!("Oh no! An error occurred apparently... but at least it was convenient to throw!");
+    tee_info!("/tmp/rugger_test.log", "This is a tee info message!");
+    tee_warning!("/tmp/rugger_test.log", "This is a tee warning message!");
+    tee_error!("/tmp/rugger_test.log", "This is a tee error message!");
+    tee_info!("/tmp/rugger_test.log", "Formatted tee: {}", "hello");
 }
