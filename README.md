@@ -2,6 +2,13 @@
 
 *Simple* and *Flexible* logging crate.
 
+## Installation
+use `cargo` to easily add it to your crate's dependencies!
+
+```bash
+cargo add rugger
+```
+
 ## Usage
 use the `log_info!()`, `log_warning!()` and `log_error!()` to conveniently Log messages.
 
