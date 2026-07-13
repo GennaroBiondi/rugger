@@ -3,4 +3,8 @@ name = "rugger"
 version = "0.1.0"
 edition = "2024"
 
+description = "simple and flexible logging crate"
+license = "MIT"
+repository = "https://github.com/GennaroBiondi/rugger"
+
 [dependencies]
