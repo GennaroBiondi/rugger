@@ -1,4 +1,4 @@
-use std::fmt::Display;
+use std::{fmt::Display, fs::OpenOptions, path::Path};
 
 /// Trait that every LogLevel needs to implement to be used as a LogLevel.
 pub trait LogLevel: Display {
@@ -33,10 +33,7 @@ impl Display for StandardLogLevel {
 
 impl LogLevel for StandardLogLevel {
     fn is_error(&self) -> bool {
-        match self {
-            Self::Info => false,
-            _ => true,
-        }
+        !matches!(self, Self::Info)
     }
 }
 
@@ -62,6 +59,21 @@ impl<T: LogLevel> LogMessage<T> {
             true => eprintln!("{}", self),
             false => println!("{}", self),
         }
+    }
+
+    /// Log the LogMessage to the output stream and appends to a file
+    pub fn tee(&self, path: impl AsRef<Path>) -> Result<(), std::io::Error> {
+        use std::io::Write;
+
+        let mut file = OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(path)?;
+        writeln!(file, "{}", self)?;
+
+        self.log();
+
+        Ok(())
     }
 }
 
