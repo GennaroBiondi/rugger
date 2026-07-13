@@ -16,7 +16,7 @@ use the `log_info!()`, `log_warning!()` and `log_error!()` to conveniently Log m
 fn main() {
     log_info!("Initiating program!");
     let a = 1;
-    log_warn!("Variable 'a' = {a}"); // Easily format variables!
+    log_warning!("Variable 'a' = {a}"); // Easily format variables!
 
     log_error!("This is an error!");
 }
@@ -24,10 +24,12 @@ fn main() {
 
 if using the `log_warning!()` or `log_error!()` macros, the output will be printed to `stderr`
 
+there are also the `tee_*!()` macros that work exactly like the `log_*!()` ones but also write to a file
+(hence the name, from the UNIX utility)
+
 ### **Note**:
-the macros use the `LogMessage` struct, which has a `message` and `log_level` field,
-the usage of the `LogMessage` struct is **heavily discouraged**, the crate is supposed to be **convenient**,
-so always use the provided macros.
+The macros use `LogMessage` struct internally.
+You can use `LogMessage::new()` directly if needed, but the macros are simpler.
 
 ## Flexibility
 as the crate provides some basic log levels (Info, Warning, Error), you can make your own easily!
@@ -44,6 +46,10 @@ enum MyLogLevels {
 then you can implement the `LogLevel` trait.
 
 ```rust
+impl Display for MyLogLevels {
+    ...
+}
+
 impl LogLevel for MyLogLevels {}
 ```
 
