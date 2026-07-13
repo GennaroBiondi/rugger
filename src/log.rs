@@ -5,6 +5,36 @@ pub trait LogLevel: Display {
     /// Should the enum print to stderr?
     ///
     /// (if the returned value is true then it prints to stderr, else stdout)
+    ///
+    /// # Example
+    /// ```rust
+    /// use std::fmt::Display;
+    /// use rugger::LogLevel;
+    ///
+    /// enum MyEnum {
+    ///     Foo,
+    ///     Bar,
+    ///     Baz,
+    /// }
+    ///
+    /// impl Display for MyEnum {
+    ///     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    ///         match self {
+    ///             Self::Foo => write!(f, "[Foo]"),
+    ///             Self::Bar => write!(f, "[Bar]"),
+    ///             Self::Baz => write!(f, "[Baz]"),
+    ///         }
+    ///     }
+    /// }
+    ///
+    /// impl LogLevel for MyEnum {
+    ///     fn is_error(&self) -> bool {
+    ///         // In this case, only the Foo enum variant will be printed to stdout,
+    ///         // The other variants will be considered an error and be printed to stderr.
+    ///         !matches!(self, Self::Foo)
+    ///     }
+    /// }
+    /// ```
     fn is_error(&self) -> bool {
         false
     }
