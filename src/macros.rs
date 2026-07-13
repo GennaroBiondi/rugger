@@ -5,7 +5,7 @@ macro_rules! log {
         $crate::LogMessage::new($msg, $level).log();
     };
     ($level:expr, $fmt:expr, $($arg:tt)*) => {
-        $crate::LogMessage::new(format!($fmt, $($arg)*), $level)
+        $crate::LogMessage::new(format!($fmt, $($arg)*), $level).log();
     };
 }
 
