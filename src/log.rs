@@ -13,7 +13,8 @@ pub trait LogLevel: Display {
 /// a Standard LogLevel, includes:
 /// - Info logs
 /// - Warning logs
-/// - Error logs
+/// - Error Log
+#[derive(Debug, Clone, Copy)]
 pub enum StandardLogLevel {
     Info,
     Warning,
@@ -33,16 +34,17 @@ impl Display for StandardLogLevel {
 impl LogLevel for StandardLogLevel {
     fn is_error(&self) -> bool {
         match self {
-            Self::Error => true,
-            _ => false,
+            Self::Info => false,
+            _ => true,
         }
     }
 }
 
 /// Struct that is used to print the log.
+#[derive(Debug, Clone)]
 pub struct LogMessage<T: LogLevel> {
-    pub message: String,
-    pub log_level: T,
+    message: String,
+    log_level: T,
 }
 
 impl<T: LogLevel> LogMessage<T> {
